@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-        <google.zxing.version>3.5.2</google.zxing.version>
+        <google.zxing.version>3.5.4</google.zxing.version>
         <aws.sdk.version>2.24.12</aws.sdk.version>
 	</properties>
 	<dependencies>

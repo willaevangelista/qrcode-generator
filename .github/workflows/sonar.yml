@@ -1,0 +1,35 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+name: Sonar Scan
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: oracle-actions/setup-java@v1
+        with:
+          website: oracle.com
+          release: 21
+
+      - name: Build with Maven
+        run: mvn clean compile -DskipTests
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5.3.1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.projectKey=willaevangelista_qrcode-generator
+            -Dsonar.organization=willaevangelista
+            -Dsonar.java.binaries=target/classes
